@@ -1,0 +1,82 @@
+﻿@model BookKeepingApp.Models.ViewModel.ReconcilationFormViewModel
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+<h4>Reconciliation</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+            <label class="control-label">Choose Year</label>
+            <select id="Year" name="Year" class="form-control" asp-items="ViewBag.Year"> <option value="">Select</option></select>
+        </div>
+
+
+    </div>
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <div id="ReconciliationData">
+            </div>
+        </div>
+    </form>
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary" />
+        <a asp-action="Index">Back to List</a>
+    </div>
+
+
+
+@section Scripts{
+    <script>
+    $(document).ready(function ()
+    {
+        $("#Year").on('change', function () {
+
+            var data = $(this).val();
+            if (data !="") {
+                LoadData(data);
+            }
+            else
+            {
+                $("#ReconcilationData").html("");
+            }
+
+        })
+    })
+
+    function LoadData(year)
+    {
+        $.ajax({
+            url: "@Url.Action("LoadReconciliationData","Reconciliation")",
+            type: "get",
+            data: { yearId: year},
+            success: function (response) {
+                $("#ReconciliationData").html(response);
+            },
+            error: function (xhr) {
+                alert("Fail");
+            }
+        });
+        }
+       
+
+        $(document).on("click", " .Reconciliation_Jan", function () {            alert("click");        });
+
+        $('#Reconciliation_Income').each(function () {
+            var totalIncome = 0;
+            var totalExpense = 0;
+            var value = parseInt($('td', this).eq(index).text());
+            if (!isNaN(value)) {
+                total += value;
+            }
+        });
+
+    </script>
+
+
+}
+
+

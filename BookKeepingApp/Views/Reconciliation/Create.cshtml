@@ -1,8 +1,9 @@
 ﻿@model BookKeepingApp.Models.ViewModel.ReconcilationFormViewModel
 @{
+    Layout = "_MasterLayout";
     ViewData["Title"] = "Create";
-}
 
+}
 <h1>Create</h1>
 <h4>Reconciliation</h4>
 <hr />
@@ -27,10 +28,10 @@
         <a asp-action="Index">Back to List</a>
     </div>
 
-
+ </div>
 
 @section Scripts{
-    <script>
+    <script>    
     $(document).ready(function ()
     {
         $("#Year").on('change', function () {

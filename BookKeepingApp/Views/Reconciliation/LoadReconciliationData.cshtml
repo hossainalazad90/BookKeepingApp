@@ -1,7 +1,8 @@
 ﻿@using BookKeepingApp.Models.Enums;
 @model BookKeepingApp.Models.ViewModel.ReconcilationFormViewModel
 
-@{   
+@{ 
+   
     var reconciliationIncome = Model.Reconciliations.Where(f => f.Head.ToString() == "Income");
     var reconciliationExpense = Model.Reconciliations.Where(f => f.Head.ToString() == "Income");
     var rowIncomeSpanCount = Model.Reconciliations.FindAll(f=>f.Head.ToString()=="Income").Count();
@@ -246,4 +247,6 @@
 
         </tbody>
     </table>
+</div>
+
     

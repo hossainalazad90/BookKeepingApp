@@ -13,6 +13,7 @@ namespace BookKeepingApp.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public int ReconcilationHeadTypeId { get; set; }
+        public int Year { get; set; }
         public decimal Jan { get; set; }
         public decimal Feb { get; set; }
         public decimal Mar { get; set; }

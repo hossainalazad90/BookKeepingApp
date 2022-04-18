@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using BookKeepingApp.Models;
 using BookKeepingApp.Models.Enums;
 using BookKeepingApp.Models.ViewModel;
 using BookKeepingApp.Models.Views;
@@ -20,32 +21,24 @@ namespace BookKeepingApp.Controllers
         private readonly IIncomeExpenseService _incomeExpenseService;
         private readonly IIncomeExpenseViewService _incomeExpenseViewService;
         private readonly ICumulativeIncomeExpenseViewService _cumulativeIncomeExpenseViewService;
-        private readonly IReconciliationViewService _reconcilationViewService;
+      
 
         public ReconciliationController(IMapper mapper,IReconciliationService reconcilationService,
             IIncomeExpenseService incomeExpenseService,
             IIncomeExpenseViewService incomeExpenseViewService,
-            ICumulativeIncomeExpenseViewService cumulativeIncomeExpenseViewService,
-            IReconciliationViewService  reconcilationViewService)
+            ICumulativeIncomeExpenseViewService cumulativeIncomeExpenseViewService
+            )
         {
             _mapper = mapper;
             _reconcilationService = reconcilationService;
             _incomeExpenseService = incomeExpenseService;
             _incomeExpenseViewService = incomeExpenseViewService;
-            _cumulativeIncomeExpenseViewService = cumulativeIncomeExpenseViewService;
-            _reconcilationViewService = reconcilationViewService;
+            _cumulativeIncomeExpenseViewService = cumulativeIncomeExpenseViewService;            
         }
         
-        public ActionResult Index()
-        {
-           
-            return View();
-        }
         
-        public ActionResult Details(int id)
-        {
-            return View();
-        }        
+        
+            
         public ActionResult Create()
         {
             ViewBag.Year = new SelectList(YearList().Select(s => new { key = s, value = s }), "key", "value");
@@ -56,9 +49,12 @@ namespace BookKeepingApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(ReconcilationFormViewModel model)
         {
+            ViewBag.Year = new SelectList(YearList().Select(s => new { key = s, value = s }), "key", "value");
             try
             {
-                return RedirectToAction(nameof(Index));
+                var saveModel = _mapper.Map<List<Reconcilation>>(model.Reconciliations);
+                _reconcilationService.SaveOrUpdateList(saveModel);
+                return View();
             }
             catch
             {
@@ -66,46 +62,13 @@ namespace BookKeepingApp.Controllers
             }
         }
         
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
+        
 
-        // POST: ReconcilationController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        
+        
 
-        // GET: ReconcilationController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: ReconcilationController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        
+        
 
         public List<int> YearList()
         {
@@ -114,12 +77,11 @@ namespace BookKeepingApp.Controllers
             {
                 d.Add(i);
             }
-
             return d;
         }
         public ActionResult LoadReconciliationData(int yearId)
         {
-            var data = new ReconcilationFormViewModel();
+            var data = new ReconcilationFormViewModel { Year=yearId};
             #region Income Expanse Portion
 
             List<ReconcilationViewModel> incomeExpanseDataList = new List<ReconcilationViewModel>();           
@@ -138,10 +100,9 @@ namespace BookKeepingApp.Controllers
 
             #endregion  Income Expanse Portion
 
-            #region Reconcilation Portion
-            var reconcilationData = _mapper.Map<List<ReconcilationViewModel>>( _reconcilationViewService.GetAll());
-
-            data.Reconciliations = reconcilationData;
+            #region Reconcilation Portion            
+            List<ReconcilationViewModel> reconData = _reconcilationService.GetAll(yearId);
+            data.Reconciliations = reconData;
 
             #endregion Reconcilation Portion
 

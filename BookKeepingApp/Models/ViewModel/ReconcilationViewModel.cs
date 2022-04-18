@@ -10,9 +10,10 @@ namespace BookKeepingApp.Models.ViewModel
     
     public class ReconcilationViewModel
     {       
-        public long Id { get; set; }
+        public long Id { get; set; }        
         public int Year { get; set; }
         public HeadEnum Head { get; set; }
+        public int ReconcilationHeadTypeId { get; set; }
         public string Description { get; set; }
         public decimal Jan { get; set; }
         public decimal Feb { get; set; }

@@ -31,8 +31,7 @@ namespace BookKeepingApp.Extension
             services.AddScoped<IIncomeExpenseViewService, IncomeExpenseViewService>();
             services.AddScoped<ICumulativeIncomeExpenseViewRepository, CumulativeIncomeExpenseViewRepository>();
             services.AddScoped<ICumulativeIncomeExpenseViewService, CumulativeIncomeExpenseViewService>();
-            services.AddScoped<IReconciliationViewRepository, ReconciliationViewRepository>();
-            services.AddScoped<IReconciliationViewService, ReconciliationViewService>();
+            
 
         }
     }

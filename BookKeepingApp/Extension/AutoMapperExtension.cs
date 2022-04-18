@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BookKeepingApp.Models;
 using BookKeepingApp.Models.ViewModel;
 using BookKeepingApp.Models.Views;
 using System;
@@ -12,9 +13,10 @@ namespace BookKeepingApp.Extension
     {
         public AutoMapperExtension()
         {
+            this.CreateMap<ReconcilationViewModel, Reconcilation>();
             this.CreateMap<IncomeExpenseView, ReconcilationViewModel>();
             this.CreateMap<CumulativeIncomeExpenseView, ReconcilationViewModel>();
-            this.CreateMap<ReconcilationView, ReconcilationViewModel>();
+            
         }
     }
 }

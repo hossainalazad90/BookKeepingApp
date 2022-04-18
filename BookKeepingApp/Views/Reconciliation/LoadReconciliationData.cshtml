@@ -1,252 +1,268 @@
 ﻿@using BookKeepingApp.Models.Enums;
 @model BookKeepingApp.Models.ViewModel.ReconcilationFormViewModel
 
-@{ 
-   
+@{
+
     var reconciliationIncome = Model.Reconciliations.Where(f => f.Head.ToString() == "Income");
     var reconciliationExpense = Model.Reconciliations.Where(f => f.Head.ToString() == "Income");
-    var rowIncomeSpanCount = Model.Reconciliations.FindAll(f=>f.Head.ToString()=="Income").Count();
+    var rowIncomeSpanCount = Model.Reconciliations.FindAll(f => f.Head.ToString() == "Income").Count();
     var rowExpenseSpanCount = Model.Reconciliations.FindAll(f => f.Head.ToString() == "Expense").Count();
     string rowSapnValue = "";
-    string ReconciliationTRId="";
-    ;}
+    string type = "";
+}
 <div class="row">
-    <table class="table" style="border:1px solid #808080">
-        <thead>
-            <tr>
-                <th colspan="14" style="text-align:center">Year 2021</th>
-            </tr>
-            <tr>
-                <th></th>
-                <th></th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IncomeExpenseViews.FirstOrDefault().Jan)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IncomeExpenseViews.FirstOrDefault().Feb)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IncomeExpenseViews.FirstOrDefault().Mar)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IncomeExpenseViews.FirstOrDefault().Apr)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IncomeExpenseViews.FirstOrDefault().May)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IncomeExpenseViews.FirstOrDefault().Jun)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IncomeExpenseViews.FirstOrDefault().Jul)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IncomeExpenseViews.FirstOrDefault().Aug)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IncomeExpenseViews.FirstOrDefault().Sep)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IncomeExpenseViews.FirstOrDefault().Oct)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IncomeExpenseViews.FirstOrDefault().Nov)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IncomeExpenseViews.FirstOrDefault().Dec)
-                </th>
+    <div class="col-md-12">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <table class="table" style="border:1px solid #808080">
+                <thead>
+                    <tr>
+                        <th colspan="14" style="text-align:center">Year 2021</th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.IncomeExpenseViews.FirstOrDefault().Jan)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.IncomeExpenseViews.FirstOrDefault().Feb)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.IncomeExpenseViews.FirstOrDefault().Mar)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.IncomeExpenseViews.FirstOrDefault().Apr)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.IncomeExpenseViews.FirstOrDefault().May)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.IncomeExpenseViews.FirstOrDefault().Jun)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.IncomeExpenseViews.FirstOrDefault().Jul)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.IncomeExpenseViews.FirstOrDefault().Aug)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.IncomeExpenseViews.FirstOrDefault().Sep)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.IncomeExpenseViews.FirstOrDefault().Oct)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.IncomeExpenseViews.FirstOrDefault().Nov)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.IncomeExpenseViews.FirstOrDefault().Dec)
+                        </th>
 
-            </tr>
-        </thead>
-        <tbody>
-            @for (int i = 0; i < Model.IncomeExpenseViews.Count(); i++)
-            {
-                <tr id="@Model.IncomeExpenseViews[i].Description">
-                    <td></td>
-                    <td>
-                        @Html.HiddenFor(modelItem => Model.IncomeExpenseViews[i].Description, new { })
-                        @Html.DisplayFor(modelItem => Model.IncomeExpenseViews[i].Description)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => Model.IncomeExpenseViews[i].Jan)
-                        @Html.HiddenFor(modelItem => Model.IncomeExpenseViews[i].Jan)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => Model.IncomeExpenseViews[i].Feb)
-                        @Html.HiddenFor(modelItem => Model.IncomeExpenseViews[i].Feb)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => Model.IncomeExpenseViews[i].Mar)
-                        @Html.HiddenFor(modelItem => Model.IncomeExpenseViews[i].Mar)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => Model.IncomeExpenseViews[i].Apr)
-                        @Html.HiddenFor(modelItem => Model.IncomeExpenseViews[i].Apr)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => Model.IncomeExpenseViews[i].May)
-                        @Html.HiddenFor(modelItem => Model.IncomeExpenseViews[i].May)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => Model.IncomeExpenseViews[i].Jun)
-                        @Html.HiddenFor(modelItem => Model.IncomeExpenseViews[i].Jun)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => Model.IncomeExpenseViews[i].Jul)
-                        @Html.HiddenFor(modelItem => Model.IncomeExpenseViews[i].Jul)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => Model.IncomeExpenseViews[i].Aug)
-                        @Html.HiddenFor(modelItem => Model.IncomeExpenseViews[i].Aug)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => Model.IncomeExpenseViews[i].Sep)
-                        @Html.HiddenFor(modelItem => Model.IncomeExpenseViews[i].Sep)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => Model.IncomeExpenseViews[i].Oct)
-                        @Html.HiddenFor(modelItem => Model.IncomeExpenseViews[i].Oct)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => Model.IncomeExpenseViews[i].Nov)
-                        @Html.HiddenFor(modelItem => Model.IncomeExpenseViews[i].Nov)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => Model.IncomeExpenseViews[i].Dec)
-                        @Html.HiddenFor(modelItem => Model.IncomeExpenseViews[i].Dec)
-                    </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.IncomeExpenseViews.Count(); i++)
+                    {
+                        <tr id="@Model.IncomeExpenseViews[i].Description">
+                            <td></td>
+                            <td>
+                                @Html.HiddenFor(modelItem => Model.IncomeExpenseViews[i].Description, new { })
+                                @Html.DisplayFor(modelItem => Model.IncomeExpenseViews[i].Description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.IncomeExpenseViews[i].Jan)
+                                @Html.HiddenFor(modelItem => Model.IncomeExpenseViews[i].Jan, new { @id = Model.IncomeExpenseViews[i].Description + "_Jan" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.IncomeExpenseViews[i].Feb)
+                                @Html.HiddenFor(modelItem => Model.IncomeExpenseViews[i].Feb, new { @id = Model.IncomeExpenseViews[i].Description + "_Feb" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.IncomeExpenseViews[i].Mar)
+                                @Html.HiddenFor(modelItem => Model.IncomeExpenseViews[i].Mar, new { @id = Model.IncomeExpenseViews[i].Description + "_Mar" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.IncomeExpenseViews[i].Apr)
+                                @Html.HiddenFor(modelItem => Model.IncomeExpenseViews[i].Apr, new { @id = Model.IncomeExpenseViews[i].Description + "_Apr" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.IncomeExpenseViews[i].May)
+                                @Html.HiddenFor(modelItem => Model.IncomeExpenseViews[i].May, new { @id = Model.IncomeExpenseViews[i].Description + "_May" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.IncomeExpenseViews[i].Jun)
+                                @Html.HiddenFor(modelItem => Model.IncomeExpenseViews[i].Jun, new { @id = Model.IncomeExpenseViews[i].Description + "_Jun" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.IncomeExpenseViews[i].Jul)
+                                @Html.HiddenFor(modelItem => Model.IncomeExpenseViews[i].Jul, new { @id = Model.IncomeExpenseViews[i].Description + "_Jul" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.IncomeExpenseViews[i].Aug)
+                                @Html.HiddenFor(modelItem => Model.IncomeExpenseViews[i].Aug, new { @id = Model.IncomeExpenseViews[i].Description + "_Aug" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.IncomeExpenseViews[i].Sep)
+                                @Html.HiddenFor(modelItem => Model.IncomeExpenseViews[i].Sep, new { @id = Model.IncomeExpenseViews[i].Description + "_Sep" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.IncomeExpenseViews[i].Oct)
+                                @Html.HiddenFor(modelItem => Model.IncomeExpenseViews[i].Oct, new { @id = Model.IncomeExpenseViews[i].Description + "_Oct" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.IncomeExpenseViews[i].Nov)
+                                @Html.HiddenFor(modelItem => Model.IncomeExpenseViews[i].Nov, new { @id = Model.IncomeExpenseViews[i].Description + "_Nov" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.IncomeExpenseViews[i].Dec)
+                                @Html.HiddenFor(modelItem => Model.IncomeExpenseViews[i].Dec, new { @id = Model.IncomeExpenseViews[i].Description + "_Dec" })
+                            </td>
 
-                </tr>
-            }
-            <tr>
-                <th colspan="14" style="text-align:center">Reconciliation</th>
-            </tr>
-            @for (int i = 0; i < Model.Reconciliations.Count(); i++)
-            {
-                
-
-            <tr class="@(Model.Reconciliations[i].Head+"_"+ Model.Reconciliations[i].Description)">
-           
-            <td>
-                @Html.DisplayFor(modelItem => Model.Reconciliations[i].Head)
-                @Html.HiddenFor(modelItem => Model.Reconciliations[i].Head)
-            </td>
-
-            <td>
-                @Html.DisplayFor(modelItem => Model.Reconciliations[i].Description)
-                @Html.HiddenFor(modelItem => Model.Reconciliations[i].Description)
-            </td>
-            <td>
-                @Html.TextBoxFor(modelItem => Model.Reconciliations[i].Jan, new { @class = "form-control  Reconciliation_Jan_"+Model.Reconciliations[i].Head })
-
-            </td>
-            <td>
-                @Html.TextBoxFor(modelItem => Model.Reconciliations[i].Feb, new { @class = "form-control Reconciliation_Feb_" + Model.Reconciliations[i].Head })
-
-            </td>
-            <td>
-                @Html.TextBoxFor(modelItem => Model.Reconciliations[i].Mar, new { @class = "form-control Reconciliation_Mar_" + Model.Reconciliations[i].Head })
-
-            </td>
-            <td>
-                @Html.TextBoxFor(modelItem => Model.Reconciliations[i].Apr, new { @class = "form-control Reconciliation_Apr_" + Model.Reconciliations[i].Head })
-
-            </td>
-            <td>
-                @Html.TextBoxFor(modelItem => Model.Reconciliations[i].May, new { @class = "form-control Reconciliation_May_" + Model.Reconciliations[i].Head })
-            </td>
-            <td>
-                @Html.TextBoxFor(modelItem => Model.Reconciliations[i].Jun, new { @class = "form-control Reconciliation_Jun_" + Model.Reconciliations[i].Head })
-
-            </td>
-            <td>
-                @Html.TextBoxFor(modelItem => Model.Reconciliations[i].Jul, new { @class = "form-control Reconciliation_July_" + Model.Reconciliations[i].Head })
-
-            </td>
-            <td>
-                @Html.TextBoxFor(modelItem => Model.Reconciliations[i].Aug, new { @class = "form-control Reconciliation_Aug_" + Model.Reconciliations[i].Head })
-
-            </td>
-            <td>
-                @Html.TextBoxFor(modelItem => Model.Reconciliations[i].Sep, new { @class = "form-control Reconciliation_Sep_" + Model.Reconciliations[i].Head })
-            </td>
-            <td>
-                @Html.TextBoxFor(modelItem => Model.Reconciliations[i].Oct, new { @class = "form-control Reconciliation_Oct_" + Model.Reconciliations[i].Head })
-            </td>
-            <td>
-                @Html.TextBoxFor(modelItem => Model.Reconciliations[i].Nov, new { @class = "form-control Reconciliation_Nov_" + Model.Reconciliations[i].Head })
-            </td>
-            <td>
-                @Html.TextBoxFor(modelItem => Model.Reconciliations[i].Dec, new { @class = "form-control Reconciliation_Dec_" + Model.Reconciliations[i].Head })
-
-            </td>
-
-        </tr>
-
-            }
-
-            <tr class="ReconciliationResult">
-                <td></td>
-                <td>
-                    <label>Reconciliation Result</label>
-                    @Html.Hidden("Description")
-                </td>
-                <td>@Html.TextBox("Jan", null, new { @class = "form-control", @Readonly = true, @id = "ReconciliationResult_Jan" })</td>
-                <td>@Html.TextBox("Feb", null, new { @class = "form-control", @Readonly = true, @id = "ReconciliationResult_Feb" })</td>
-                <td>@Html.TextBox("Mar", null, new { @class = "form-control", @Readonly = true, @id = "ReconciliationResult_Mar" })</td>
-                <td>@Html.TextBox("Apr", null, new { @class = "form-control", @Readonly = true, @id = "ReconciliationResult_Apr" })</td>
-                <td>@Html.TextBox("May", null, new { @class = "form-control", @Readonly = true, @id = "ReconciliationResult_May" })</td>
-                <td>@Html.TextBox("Jun", null, new { @class = "form-control", @Readonly = true, @id = "ReconciliationResult_Jun" })</td>
-                <td>@Html.TextBox("Jul", null, new { @class = "form-control", @Readonly = true, @id = "ReconciliationResult_Jul" })</td>
-                <td>@Html.TextBox("Aug", null, new { @class = "form-control", @Readonly = true, @id = "ReconciliationResult_Aug" })</td>
-                <td>@Html.TextBox("Sep", null, new { @class = "form-control", @Readonly = true, @id = "ReconciliationResult_Sep" })</td>
-                <td>@Html.TextBox("Oct", null, new { @class = "form-control", @Readonly = true, @id = "ReconciliationResult_Oct" })</td>
-                <td>@Html.TextBox("Nov", null, new { @class = "form-control", @Readonly = true, @id = "ReconciliationResult_Nov" })</td>
-                <td>@Html.TextBox("Dec", null, new { @class = "form-control", @Readonly = true, @id = "ReconciliationResult_Dec" })</td>
-            </tr>
-            <tr class="FinalResult">
-                <td></td>
-                <td>
-                    <label>Final Result</label>
-                    @Html.Hidden("Description")
-                </td>
-                <td>@Html.TextBox("Jan", null, new { @class = "form-control", @Readonly = true, @id = "FinalResult_Jan" })</td>
-                <td>@Html.TextBox("Feb", null, new { @class = "form-control", @Readonly = true, @id = "FinalResult_Feb" })</td>
-                <td>@Html.TextBox("Mar", null, new { @class = "form-control", @Readonly = true, @id = "FinalResult_Mar" })</td>
-                <td>@Html.TextBox("Apr", null, new { @class = "form-control", @Readonly = true, @id = "FinalResult_Apr" })</td>
-                <td>@Html.TextBox("May", null, new { @class = "form-control", @Readonly = true, @id = "FinalResult_May" })</td>
-                <td>@Html.TextBox("Jun", null, new { @class = "form-control", @Readonly = true, @id = "FinalResult_Jun" })</td>
-                <td>@Html.TextBox("Jul", null, new { @class = "form-control", @Readonly = true, @id = "FinalResult_Jul" })</td>
-                <td>@Html.TextBox("Aug", null, new { @class = "form-control", @Readonly = true, @id = "FinalResult_Aug" })</td>
-                <td>@Html.TextBox("Sep", null, new { @class = "form-control", @Readonly = true, @id = "FinalResult_Sep" })</td>
-                <td>@Html.TextBox("Oct", null, new { @class = "form-control", @Readonly = true, @id = "FinalResult_Oct" })</td>
-                <td>@Html.TextBox("Nov", null, new { @class = "form-control", @Readonly = true, @id = "FinalResult_Nov" })</td>
-                <td>@Html.TextBox("Dec", null, new { @class = "form-control", @Readonly = true, @id = "FinalResult_Dec" })</td>
-            </tr>
-            <tr class="CumulutiveFinalResult">
-                <td></td>
-                <td>
-                    <label>Cumulative Final Result</label>
-                    @Html.Hidden("Description")
-                </td>
-                <td>@Html.TextBox("Jan", null, new { @class = "form-control", @Readonly = true, @id = "CumulutiveFinalResult_Jan" })</td>
-                <td>@Html.TextBox("Feb", null, new { @class = "form-control", @Readonly = true, @id = "CumulutiveFinalResult_Feb" })</td>
-                <td>@Html.TextBox("Mar", null, new { @class = "form-control", @Readonly = true, @id = "CumulutiveFinalResult_Mar" })</td>
-                <td>@Html.TextBox("Apr", null, new { @class = "form-control", @Readonly = true, @id = "CumulutiveFinalResult_Apr" })</td>
-                <td>@Html.TextBox("May", null, new { @class = "form-control", @Readonly = true, @id = "CumulutiveFinalResult_May" })</td>
-                <td>@Html.TextBox("Jun", null, new { @class = "form-control", @Readonly = true, @id = "CumulutiveFinalResult_Jun" })</td>
-                <td>@Html.TextBox("Jul", null, new { @class = "form-control", @Readonly = true, @id = "CumulutiveFinalResult_Jul" })</td>
-                <td>@Html.TextBox("Aug", null, new { @class = "form-control", @Readonly = true, @id = "CumulutiveFinalResult_Aug" })</td>
-                <td>@Html.TextBox("Sep", null, new { @class = "form-control", @Readonly = true, @id = "CumulutiveFinalResult_Sep" })</td>
-                <td>@Html.TextBox("Oct", null, new { @class = "form-control", @Readonly = true, @id = "CumulutiveFinalResult_Oct" })</td>
-                <td>@Html.TextBox("Nov", null, new { @class = "form-control", @Readonly = true, @id = "CumulutiveFinalResult_Nov" })</td>
-                <td>@Html.TextBox("Dec", null, new { @class = "form-control", @Readonly = true, @id = "CumulutiveFinalResult_Dec" })</td>
-            </tr>
+                        </tr>
+                    }
+                    <tr>
+                        <th colspan="14" style="text-align:center">Reconciliation</th>
+                    </tr>
+                    @for (int i = 0; i < Model.Reconciliations.Count(); i++)
+                    {
 
 
+                        <tr class="@(Model.Reconciliations[i].Head+"_"+ Model.Reconciliations[i].Description)">
 
-        </tbody>
-    </table>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.Reconciliations[i].Head)
+                                @Html.HiddenFor(modelItem => Model.Reconciliations[i].Head)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.Reconciliations[i].Description)
+                                @Html.HiddenFor(modelItem => Model.Reconciliations[i].Description)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.Reconciliations[i].Jan, new { @onchange = "CalculateResult(this,'Jan')", @class = "form-control Reconciliation_Jan  Reconciliation_Jan_" + @Model.Reconciliations[i].Head.ToString() + "" })
+
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.Reconciliations[i].Feb, new { @onchange = "CalculateResult(this,'Feb')", @class = "form-control Reconciliation_Feb Reconciliation_Feb_" + @Model.Reconciliations[i].Head.ToString() + "" })
+
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.Reconciliations[i].Mar, new { @onchange = "CalculateResult(this,'Mar')", @class = "form-control Reconciliation_Mar Reconciliation_Mar_" + @Model.Reconciliations[i].Head.ToString() + "" })
+
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.Reconciliations[i].Apr, new { @onchange = "CalculateResult(this,'Apr')", @class = "form-control Reconciliation_Apr Reconciliation_Apr_" + @Model.Reconciliations[i].Head.ToString() + "" })
+
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.Reconciliations[i].May, new { @onchange = "CalculateResult(this,'May')", @class = "form-control Reconciliation_May Reconciliation_May_" + @Model.Reconciliations[i].Head.ToString() + "" })
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.Reconciliations[i].Jun, new { @onchange = "CalculateResult(this,'Jun')", @class = "form-control Reconciliation_Jun Reconciliation_Jun_" + @Model.Reconciliations[i].Head.ToString() + "" })
+
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.Reconciliations[i].Jul, new { @onchange = "CalculateResult(this,'Jul')", @class = "form-control Reconciliation_Jul Reconciliation_Jul_" + @Model.Reconciliations[i].Head.ToString() + "" })
+
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.Reconciliations[i].Aug, new { @onchange = "CalculateResult(this,'Aug')", @class = "form-control Reconciliation_Aug Reconciliation_Aug_" + @Model.Reconciliations[i].Head.ToString() + "" })
+
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.Reconciliations[i].Sep, new { @onchange = "CalculateResult(this,'Sep')", @class = "form-control Reconciliation_Sep Reconciliation_Sep_" + @Model.Reconciliations[i].Head.ToString() + "" })
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.Reconciliations[i].Oct, new { @onchange = "CalculateResult(this,'Oct')", @class = "form-control Reconciliation_Oct Reconciliation_Oct_" + @Model.Reconciliations[i].Head.ToString() + "" })
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.Reconciliations[i].Nov, new { @onchange = "CalculateResult(this,'Nov')", @class = "form-control Reconciliation_Nov Reconciliation_Nov_" + @Model.Reconciliations[i].Head.ToString() + "" })
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.Reconciliations[i].Dec, new { @onchange = "CalculateResult(this,'Dec')", @class = "form-control Reconciliation_Dec Reconciliation_Dec_" + @Model.Reconciliations[i].Head.ToString() + "" })
+
+                            </td>
+
+                        </tr>
+
+                    }
+
+                    <tr class="ReconciliationResult">
+                        <td></td>
+                        <td>
+                            <label>Reconciliation Result</label>
+                            @Html.Hidden("Description")
+                        </td>
+                        <td>@Html.TextBox("Jan", null, new { @class = "form-control", @Readonly = true, @id = "ReconciliationResult_Jan" })</td>
+                        <td>@Html.TextBox("Feb", null, new { @class = "form-control", @Readonly = true, @id = "ReconciliationResult_Feb" })</td>
+                        <td>@Html.TextBox("Mar", null, new { @class = "form-control", @Readonly = true, @id = "ReconciliationResult_Mar" })</td>
+                        <td>@Html.TextBox("Apr", null, new { @class = "form-control", @Readonly = true, @id = "ReconciliationResult_Apr" })</td>
+                        <td>@Html.TextBox("May", null, new { @class = "form-control", @Readonly = true, @id = "ReconciliationResult_May" })</td>
+                        <td>@Html.TextBox("Jun", null, new { @class = "form-control", @Readonly = true, @id = "ReconciliationResult_Jun" })</td>
+                        <td>@Html.TextBox("Jul", null, new { @class = "form-control", @Readonly = true, @id = "ReconciliationResult_Jul" })</td>
+                        <td>@Html.TextBox("Aug", null, new { @class = "form-control", @Readonly = true, @id = "ReconciliationResult_Aug" })</td>
+                        <td>@Html.TextBox("Sep", null, new { @class = "form-control", @Readonly = true, @id = "ReconciliationResult_Sep" })</td>
+                        <td>@Html.TextBox("Oct", null, new { @class = "form-control", @Readonly = true, @id = "ReconciliationResult_Oct" })</td>
+                        <td>@Html.TextBox("Nov", null, new { @class = "form-control", @Readonly = true, @id = "ReconciliationResult_Nov" })</td>
+                        <td>@Html.TextBox("Dec", null, new { @class = "form-control", @Readonly = true, @id = "ReconciliationResult_Dec" })</td>
+                    </tr>
+                    <tr class="FinalResult">
+                        <td></td>
+                        <td>
+                            <label>Final Result</label>
+                            @Html.Hidden("Description")
+                        </td>
+                        <td>@Html.TextBox("Jan", null, new { @class = "form-control", @Readonly = true, @id = "FinalResult_Jan" })</td>
+                        <td>@Html.TextBox("Feb", null, new { @class = "form-control", @Readonly = true, @id = "FinalResult_Feb" })</td>
+                        <td>@Html.TextBox("Mar", null, new { @class = "form-control", @Readonly = true, @id = "FinalResult_Mar" })</td>
+                        <td>@Html.TextBox("Apr", null, new { @class = "form-control", @Readonly = true, @id = "FinalResult_Apr" })</td>
+                        <td>@Html.TextBox("May", null, new { @class = "form-control", @Readonly = true, @id = "FinalResult_May" })</td>
+                        <td>@Html.TextBox("Jun", null, new { @class = "form-control", @Readonly = true, @id = "FinalResult_Jun" })</td>
+                        <td>@Html.TextBox("Jul", null, new { @class = "form-control", @Readonly = true, @id = "FinalResult_Jul" })</td>
+                        <td>@Html.TextBox("Aug", null, new { @class = "form-control", @Readonly = true, @id = "FinalResult_Aug" })</td>
+                        <td>@Html.TextBox("Sep", null, new { @class = "form-control", @Readonly = true, @id = "FinalResult_Sep" })</td>
+                        <td>@Html.TextBox("Oct", null, new { @class = "form-control", @Readonly = true, @id = "FinalResult_Oct" })</td>
+                        <td>@Html.TextBox("Nov", null, new { @class = "form-control", @Readonly = true, @id = "FinalResult_Nov" })</td>
+                        <td>@Html.TextBox("Dec", null, new { @class = "form-control", @Readonly = true, @id = "FinalResult_Dec" })</td>
+                    </tr>
+                    <tr class="CumulutiveFinalResult">
+                        <td></td>
+                        <td>
+                            <label>Cumulative Final Result</label>
+                            @Html.Hidden("Description")
+                        </td>
+                        <td>@Html.TextBox("Jan", null, new { @class = "form-control", @Readonly = true, @id = "CumulutiveFinalResult_Jan" })</td>
+                        <td>@Html.TextBox("Feb", null, new { @class = "form-control", @Readonly = true, @id = "CumulutiveFinalResult_Feb" })</td>
+                        <td>@Html.TextBox("Mar", null, new { @class = "form-control", @Readonly = true, @id = "CumulutiveFinalResult_Mar" })</td>
+                        <td>@Html.TextBox("Apr", null, new { @class = "form-control", @Readonly = true, @id = "CumulutiveFinalResult_Apr" })</td>
+                        <td>@Html.TextBox("May", null, new { @class = "form-control", @Readonly = true, @id = "CumulutiveFinalResult_May" })</td>
+                        <td>@Html.TextBox("Jun", null, new { @class = "form-control", @Readonly = true, @id = "CumulutiveFinalResult_Jun" })</td>
+                        <td>@Html.TextBox("Jul", null, new { @class = "form-control", @Readonly = true, @id = "CumulutiveFinalResult_Jul" })</td>
+                        <td>@Html.TextBox("Aug", null, new { @class = "form-control", @Readonly = true, @id = "CumulutiveFinalResult_Aug" })</td>
+                        <td>@Html.TextBox("Sep", null, new { @class = "form-control", @Readonly = true, @id = "CumulutiveFinalResult_Sep" })</td>
+                        <td>@Html.TextBox("Oct", null, new { @class = "form-control", @Readonly = true, @id = "CumulutiveFinalResult_Oct" })</td>
+                        <td>@Html.TextBox("Nov", null, new { @class = "form-control", @Readonly = true, @id = "CumulutiveFinalResult_Nov" })</td>
+                        <td>@Html.TextBox("Dec", null, new { @class = "form-control", @Readonly = true, @id = "CumulutiveFinalResult_Dec" })</td>
+                    </tr>
+
+
+
+                </tbody>
+            </table>
+        </form>
+    </div>
+
+
+    <div class="col-md-4">
+        <div class="form-group">
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+    </div>
+
 </div>
 
-    
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

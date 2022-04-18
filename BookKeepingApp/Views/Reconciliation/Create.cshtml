@@ -16,28 +16,24 @@
 
 
     </div>
-    <form asp-action="Create">
+    @*<form asp-action="Create">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="row">
-            <div id="ReconciliationData">
-            </div>
+        <div class="form-group">
+
         </div>
-    </form>
-    <div class="form-group">
-        <input type="submit" value="Create" class="btn btn-primary" />
-        <a asp-action="Index">Back to List</a>
+    </form>*@
+    <div id="ReconciliationData">
     </div>
 
- </div>
+
+</div>
 
 @section Scripts{
-    <script>    
-    $(document).ready(function ()
-    {
-        $("#Year").on('change', function () {
+    <script>
 
-            var data = $(this).val();
-            if (data !="") {
+        $(document).on("change", "#Year", function () {
+            var data = $("#Year").val();
+            if (data != "") {
                 LoadData(data);
             }
             else
@@ -45,8 +41,7 @@
                 $("#ReconcilationData").html("");
             }
 
-        })
-    })
+        });
 
     function LoadData(year)
     {
@@ -56,24 +51,62 @@
             data: { yearId: year},
             success: function (response) {
                 $("#ReconciliationData").html(response);
+
+                var arr = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                $.each(arr, function (index, val) {
+                    CalculateResult(this, val);
+                });
             },
             error: function (xhr) {
                 alert("Fail");
             }
         });
+
+
         }
-       
 
-        $(document).on("click", " .Reconciliation_Jan", function () {            alert("click");        });
+        function CalculateResult(e, m)
+        {
+            var sum = 0;
+            $(".Reconciliation_" + m).each(function () {
+                var amount = $(this).val();
+                if ($(this).hasClass('Reconciliation_'+m+'_Income')) {
+                    sum = sum * 1 + amount * 1;
+                }
+                else
+                {
+                    sum = sum * 1 - amount * 1;
+                }
 
-        $('#Reconciliation_Income').each(function () {
-            var totalIncome = 0;
-            var totalExpense = 0;
-            var value = parseInt($('td', this).eq(index).text());
-            if (!isNaN(value)) {
-                total += value;
-            }
-        });
+            });
+
+            $('#ReconciliationResult_' + m).val(sum);
+            CalculateFinalResult(m);
+        }
+
+        function CalculateFinalResult(m)
+        {
+            var Result = $("#Result_" + m).val();
+            var ReconciliationResult = $('#ReconciliationResult_' + m).val();
+            $("#FinalResult_" + m).val(Result * 1 + ReconciliationResult * 1);
+            CalculateCumulativeFinalResult()
+        }
+
+        function CalculateCumulativeFinalResult() {
+
+            var arr = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+            var cumValue = 0;
+            $.each(arr, function (index, val)
+            {
+                var d = $("#FinalResult_" + val).val();
+                cumValue = cumValue * 1 + d * 1;
+                $("#CumulutiveFinalResult_" + val).val(cumValue);
+
+           });
+
+        }
+
+
 
     </script>
 

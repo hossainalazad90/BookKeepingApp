@@ -26,7 +26,7 @@ namespace BookKeepingApp.Context
         public DbSet<IncomeExpenseView> IncomeExpenseViews { get; set; }
         public DbSet<CumulativeIncomeExpenseView> CumulativeIncomeExpenseViews { get; set; }
         public DbSet<ReconcilationView> ReconcilationViews { get; set; }
-        
+
         #endregion DB View
 
 

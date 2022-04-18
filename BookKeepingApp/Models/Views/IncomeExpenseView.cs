@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace BookKeepingApp.Models.Views
 {
+
     public class IncomeExpenseView
     {
         public long Id { get; set; }

@@ -8,15 +8,18 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <style>
-        .footer {
-            position: fixed;
-            left: 0;
-            bottom: 0;
-            width: 100%;
-            text-align: center;
+            .footer {
+                left: 0;
+                bottom: 0;
+                width: 100%;
+                text-align: center;
+            }
+
+        .main-container{
+            min-height:85vh;
         }
-    </style>
- 
+        </style>
+
 </head>
 <body>
     <header>
@@ -41,12 +44,12 @@
                             <ul class="dropdown-menu">
                                 <li><a asp-action="Index" asp-controller="IncomeExpenseHead">Income Expense Head Setup</a></li>
                                 <li><a asp-action="Index" asp-controller="ReconciliationHeadType">Reconciliation Type Setup</a></li>
-                               
+
                             </ul>
                         </li>
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                               Process
+                                Process
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
@@ -55,12 +58,12 @@
                                 <li><a asp-action="Index" asp-controller="Reconciliation">Reconciliation Entry</a></li>
                             </ul>
 
-                  </ul>
+                    </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container main-container " >
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
@@ -68,14 +71,11 @@
 
 
     <footer class="border-top footer text-muted">
-       
-            <nav class="navbar navbar-inverse">
-                <div class="container-fluid">
-                    @@ @DateTime.Now.Year Copyright:
-                    <a class="text-white" asp-action="Index" asp-controller="Home">BookKeeping App</a>
-                </div>
-             </nav>
-       
+
+        <div class="text-center">
+            &copy;@DateTime.Now.Year Copyright:
+            <a class="text-white" asp-action="Index" asp-controller="Home">BookKeeping App</a>
+        </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

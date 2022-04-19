@@ -20,8 +20,7 @@ namespace BookKeepingApp.Controllers
         private readonly IReconciliationService _reconcilationService;
         private readonly IIncomeExpenseService _incomeExpenseService;
         private readonly IIncomeExpenseViewService _incomeExpenseViewService;
-        private readonly ICumulativeIncomeExpenseViewService _cumulativeIncomeExpenseViewService;
-      
+        private readonly ICumulativeIncomeExpenseViewService _cumulativeIncomeExpenseViewService;      
 
         public ReconciliationController(IMapper mapper,IReconciliationService reconcilationService,
             IIncomeExpenseService incomeExpenseService,

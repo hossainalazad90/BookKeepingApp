@@ -18,9 +18,8 @@ namespace BookKeepingApp.Services
         void Save(IncomeExpense model);
         void Update(IncomeExpense model);
         void Delete(int id);
-        //ReconcilationViewModel MonthWiseData(int yearId, HeadEnum income);
-        //ReconcilationViewModel GetAll(int yearId, HeadEnum expense);
-        //ReconcilationViewModel MonthWiseCumulativeData(int yearId, HeadEnum income);
+        ReconcilationViewModel GetCumulativeAmount(HeadEnum income, int yearId);
+        
     }
 
     public class IncomeExpenseService : IIncomeExpenseService
@@ -65,6 +64,48 @@ namespace BookKeepingApp.Services
             var result = _incomeExpenseRepository.FirstOrDefault(f => f.Id == id);
             _incomeExpenseRepository.Delete(result);
             _unitOfWork.Commit();
-        }        
+        }
+
+        public ReconcilationViewModel GetCumulativeAmount(HeadEnum head, int yearId)
+        {
+
+            var  camulativeData = new ReconcilationViewModel 
+            {
+                Year=yearId,
+                Head= head,
+                Description=head==HeadEnum.Income?"Cumulative Income": "Cumulative Cost"
+            };
+            var result = _incomeExpenseRepository.GetAll().Where(f => f.IncomeExpenseHead.Head == head && f.EntryDate.Year == yearId).ToList();
+            List<decimal> cumArray = new List<decimal>();
+            decimal cumValue= 0;
+            for (int i = 1; i <= 12; i++)
+            {
+                var res = result.FindAll(f => f.EntryDate.Month == i);
+                if (res.Count()>0)
+                {
+                    cumValue += res.Select(s => s.Amount).Sum();
+                    cumArray.Add(cumValue);
+                    
+                }
+                else
+                {
+                    cumArray.Add(cumValue);
+                }
+            }
+            camulativeData.Jan = cumArray[0];
+            camulativeData.Feb = cumArray[1];
+            camulativeData.Mar = cumArray[2];
+            camulativeData.Apr = cumArray[3];
+            camulativeData.May = cumArray[4];
+            camulativeData.Jun = cumArray[5];
+            camulativeData.Jul = cumArray[6];
+            camulativeData.Aug = cumArray[7];
+            camulativeData.Sep = cumArray[8];
+            camulativeData.Oct = cumArray[9];
+            camulativeData.Nov = cumArray[10];
+            camulativeData.Dec = cumArray[11];
+
+            return camulativeData;
+        }
     }
 }

@@ -86,10 +86,10 @@ namespace BookKeepingApp.Controllers
 
             List<ReconcilationViewModel> incomeExpanseDataList = new List<ReconcilationViewModel>();           
 
-            var yearOfIncome =_mapper.Map< ReconcilationViewModel>( _incomeExpenseViewService.GetByYearAndHead(yearId, HeadEnum.Income)?? new IncomeExpenseView { Description="Income" });
-            var cumulativeYearOfIncome = _mapper.Map <ReconcilationViewModel>(_cumulativeIncomeExpenseViewService.GetByYearAndHead(yearId, HeadEnum.Income)?? new CumulativeIncomeExpenseView { Description="Cumulative Income" });
-            var yearOfExpense = _mapper.Map < ReconcilationViewModel >( _incomeExpenseViewService.GetByYearAndHead(yearId, HeadEnum.Expense)?? new IncomeExpenseView { Description = "Cost" });
-            var cumulativeYearOfExpense = _mapper.Map < ReconcilationViewModel > (_cumulativeIncomeExpenseViewService.GetByYearAndHead(yearId, HeadEnum.Expense) ?? new CumulativeIncomeExpenseView { Description = "Cumulative Cost" });
+            var yearOfIncome =_mapper.Map< ReconcilationViewModel>( _incomeExpenseViewService.GetByYearAndHead(yearId, HeadEnum.Income)?? new IncomeExpenseView { Description="Income" });            
+            var cumulativeYearOfIncome =_incomeExpenseService.GetCumulativeAmount(HeadEnum.Income,yearId);
+            var yearOfExpense = _mapper.Map < ReconcilationViewModel >( _incomeExpenseViewService.GetByYearAndHead(yearId, HeadEnum.Expense)?? new IncomeExpenseView { Description = "Cost" });            
+            var cumulativeYearOfExpense = _incomeExpenseService.GetCumulativeAmount(HeadEnum.Expense, yearId);
             var result = CalculateResult(yearOfIncome, yearOfExpense);
             incomeExpanseDataList.Add(yearOfIncome);
             incomeExpanseDataList.Add(cumulativeYearOfIncome);
@@ -133,5 +133,6 @@ namespace BookKeepingApp.Controllers
             return result;
 
         }
+        
     }
 }

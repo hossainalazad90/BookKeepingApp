@@ -1,5 +1,7 @@
 # BookKeepingApp
+
 --Technology--
+
 1.Dot net Web App
 2.MSSQL 
 3.Code First Approch
@@ -8,6 +10,7 @@
 6.JavaScript(Jquery)
 
 --Architecture--
+
 1.Generic Repository
 2.Clean Architecture
 3.Unit of Work
@@ -15,6 +18,7 @@
 5.Auto Mapper
 
 # Steps should  Follow
+
  Step 1 : Go to   --- Tools>NewGet Package Manager>Package Manager Console
  Step 2 : Write   --- Update-Database       and Press Enter Key.
  Step 3 : Go to   --- Solution Explorer>Script>Views

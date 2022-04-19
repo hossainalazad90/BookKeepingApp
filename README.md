@@ -9,13 +9,15 @@
 5.Razor View
 6.JavaScript(Jquery)
 
---Architecture--
+--Architecture & Tools--
 
 1.Generic Repository
 2.Clean Architecture
 3.Unit of Work
 4.Lazy Loading Enable
 5.Auto Mapper
+6.SQL View 
+7.Enum
 
 # Steps should  Follow
 

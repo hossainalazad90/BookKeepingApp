@@ -4,17 +4,12 @@
     ViewData["Title"] = "Create";
 
 }
-<h1>Create</h1>
-<h4>Reconciliation</h4>
-<hr />
 <div class="row">
     <div class="col-md-4">
         <div class="form-group">
             <label class="control-label">Choose Year</label>
             <select id="Year" name="Year" class="form-control" asp-items="ViewBag.Year"> <option value="">Select</option></select>
         </div>
-
-
     </div>
     @*<form asp-action="Create">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -39,7 +34,7 @@
             }
             else
             {
-                $("#ReconcilationData").html("");
+                $("#ReconciliationData").html("");
             }
 
         });

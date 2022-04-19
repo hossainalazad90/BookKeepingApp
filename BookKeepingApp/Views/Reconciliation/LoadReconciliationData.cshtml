@@ -1,15 +1,16 @@
 ﻿@using BookKeepingApp.Models.Enums;
 @model BookKeepingApp.Models.ViewModel.ReconcilationFormViewModel
-@{
-
-    
+@{ 
+    var counter = 0;
+    var income = Model.Reconciliations.FindAll(f => f.Head.ToString() == "Income").Count();
+    var expense = Model.Reconciliations.FindAll(f => f.Head.ToString() == "Expense").Count();
 }
 <div class="row">
     <div class="col-md-12">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <table class="table" style="border:1px solid #808080">
+                <table class="table table-bordered table-responsive" >
                     <thead>
                         <tr>
                             <th colspan="14" style="text-align:center">Year @Model.Year</th>
@@ -59,7 +60,7 @@
                     <tbody>
                         @for (int i = 0; i < Model.IncomeExpenseViews.Count(); i++)
                         {
-                            <tr id="@Model.IncomeExpenseViews[i].Description">
+                            <tr class="@(Model.IncomeExpenseViews[i].Head+"_"+ Model.IncomeExpenseViews[i].Description)">
                                 <td></td>
                                 <td>
                                     @Html.HiddenFor(modelItem => Model.IncomeExpenseViews[i].Description, new { })
@@ -123,65 +124,84 @@
                         {
 
 
-                            <tr class="@(Model.Reconciliations[i].Head+"_"+ Model.Reconciliations[i].Description)">
-                                @Html.HiddenFor(modelItem => Model.Reconciliations[i].Id)
-                                @Html.HiddenFor(modelItem => Model.Reconciliations[i].Year)
-                                @Html.HiddenFor(modelItem => Model.Reconciliations[i].ReconcilationHeadTypeId)
-                                <td>
-                                    @Html.DisplayFor(modelItem => Model.Reconciliations[i].Head)
-                                    @Html.HiddenFor(modelItem => Model.Reconciliations[i].Head)
-                                </td>
+                    <tr class="@(Model.Reconciliations[i].Head + "_" + Model.Reconciliations[i].Description)">
+                        @Html.HiddenFor(modelItem => Model.Reconciliations[i].Id)
+                        @Html.HiddenFor(modelItem => Model.Reconciliations[i].Year)
+                        @Html.HiddenFor(modelItem => Model.Reconciliations[i].ReconcilationHeadTypeId)
 
-                                <td>
-                                    @Html.DisplayFor(modelItem => Model.Reconciliations[i].Description)
-                                    @Html.HiddenFor(modelItem => Model.Reconciliations[i].Description)
-                                </td>
-                                <td>
-                                    @Html.TextBoxFor(modelItem => Model.Reconciliations[i].Jan, new { @onchange = "CalculateResult(this,'Jan')", @class = "form-control Reconciliation_Jan  Reconciliation_Jan_" + @Model.Reconciliations[i].Head.ToString() + "" })
+                        @if (counter == 0 && Model.Reconciliations[i].Head.ToString() == "Income")
+                        {
+                            <td rowspan="@income" style="vertical-align : middle;text-align:center;">
+                                @Html.DisplayFor(modelItem => Model.Reconciliations[i].Head)
+                                @Html.HiddenFor(modelItem => Model.Reconciliations[i].Head)
+                            </td>
+                        }
+                        @if (counter == 0 && Model.Reconciliations[i].Head.ToString() == "Expense")
+                        {
+                            <td rowspan="@expense" style="vertical-align : middle;text-align:center;">
+                                @Html.DisplayFor(modelItem => Model.Reconciliations[i].Head)
+                                @Html.HiddenFor(modelItem => Model.Reconciliations[i].Head)
+                            </td>
+                        }
+                        @{
+                            counter++;
+                            if (income == counter)
+                            {
+                                counter = 0;
+                            }
+                        }
 
-                                </td>
-                                <td>
-                                    @Html.TextBoxFor(modelItem => Model.Reconciliations[i].Feb, new { @onchange = "CalculateResult(this,'Feb')", @class = "form-control Reconciliation_Feb Reconciliation_Feb_" + @Model.Reconciliations[i].Head.ToString() + "" })
 
-                                </td>
-                                <td>
-                                    @Html.TextBoxFor(modelItem => Model.Reconciliations[i].Mar, new { @onchange = "CalculateResult(this,'Mar')", @class = "form-control Reconciliation_Mar Reconciliation_Mar_" + @Model.Reconciliations[i].Head.ToString() + "" })
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Reconciliations[i].Description)
+                            @Html.HiddenFor(modelItem => Model.Reconciliations[i].Description)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.Reconciliations[i].Jan, new { @type = "number", @min = 0, @onkeyup = "CalculateResult(this,'Jan')", @onchange = "CalculateResult(this,'Jan')", @class = "form-control Reconciliation_Jan  Reconciliation_Jan_" + @Model.Reconciliations[i].Head.ToString() + "" })
 
-                                </td>
-                                <td>
-                                    @Html.TextBoxFor(modelItem => Model.Reconciliations[i].Apr, new { @onchange = "CalculateResult(this,'Apr')", @class = "form-control Reconciliation_Apr Reconciliation_Apr_" + @Model.Reconciliations[i].Head.ToString() + "" })
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.Reconciliations[i].Feb, new { @type = "number", @min = 0, @onkeyup = "CalculateResult(this,'Feb')", @onchange = "CalculateResult(this,'Jan')", @class = "form-control Reconciliation_Feb Reconciliation_Feb_" + @Model.Reconciliations[i].Head.ToString() + "" })
 
-                                </td>
-                                <td>
-                                    @Html.TextBoxFor(modelItem => Model.Reconciliations[i].May, new { @onchange = "CalculateResult(this,'May')", @class = "form-control Reconciliation_May Reconciliation_May_" + @Model.Reconciliations[i].Head.ToString() + "" })
-                                </td>
-                                <td>
-                                    @Html.TextBoxFor(modelItem => Model.Reconciliations[i].Jun, new { @onchange = "CalculateResult(this,'Jun')", @class = "form-control Reconciliation_Jun Reconciliation_Jun_" + @Model.Reconciliations[i].Head.ToString() + "" })
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.Reconciliations[i].Mar, new { @type = "number", @min = 0, @onkeyup = "CalculateResult(this,'Mar')", @onchange = "CalculateResult(this,'Jan')", @class = "form-control Reconciliation_Mar Reconciliation_Mar_" + @Model.Reconciliations[i].Head.ToString() + "" })
 
-                                </td>
-                                <td>
-                                    @Html.TextBoxFor(modelItem => Model.Reconciliations[i].Jul, new { @onchange = "CalculateResult(this,'Jul')", @class = "form-control Reconciliation_Jul Reconciliation_Jul_" + @Model.Reconciliations[i].Head.ToString() + "" })
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.Reconciliations[i].Apr, new { @type = "number", @min = 0, @onkeyup = "CalculateResult(this,'Apr')", @onchange = "CalculateResult(this,'Jan')", @class = "form-control Reconciliation_Apr Reconciliation_Apr_" + @Model.Reconciliations[i].Head.ToString() + "" })
 
-                                </td>
-                                <td>
-                                    @Html.TextBoxFor(modelItem => Model.Reconciliations[i].Aug, new { @onchange = "CalculateResult(this,'Aug')", @class = "form-control Reconciliation_Aug Reconciliation_Aug_" + @Model.Reconciliations[i].Head.ToString() + "" })
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.Reconciliations[i].May, new { @type = "number", @min = 0, @onkeyup = "CalculateResult(this,'May')", @onchange = "CalculateResult(this,'Jan')", @class = "form-control Reconciliation_May Reconciliation_May_" + @Model.Reconciliations[i].Head.ToString() + "" })
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.Reconciliations[i].Jun, new { @type = "number", @min = 0, @onkeyup = "CalculateResult(this,'Jun')", @onchange = "CalculateResult(this,'Jan')", @class = "form-control Reconciliation_Jun Reconciliation_Jun_" + @Model.Reconciliations[i].Head.ToString() + "" })
 
-                                </td>
-                                <td>
-                                    @Html.TextBoxFor(modelItem => Model.Reconciliations[i].Sep, new { @onchange = "CalculateResult(this,'Sep')", @class = "form-control Reconciliation_Sep Reconciliation_Sep_" + @Model.Reconciliations[i].Head.ToString() + "" })
-                                </td>
-                                <td>
-                                    @Html.TextBoxFor(modelItem => Model.Reconciliations[i].Oct, new { @onchange = "CalculateResult(this,'Oct')", @class = "form-control Reconciliation_Oct Reconciliation_Oct_" + @Model.Reconciliations[i].Head.ToString() + "" })
-                                </td>
-                                <td>
-                                    @Html.TextBoxFor(modelItem => Model.Reconciliations[i].Nov, new { @onchange = "CalculateResult(this,'Nov')", @class = "form-control Reconciliation_Nov Reconciliation_Nov_" + @Model.Reconciliations[i].Head.ToString() + "" })
-                                </td>
-                                <td>
-                                    @Html.TextBoxFor(modelItem => Model.Reconciliations[i].Dec, new { @onchange = "CalculateResult(this,'Dec')", @class = "form-control Reconciliation_Dec Reconciliation_Dec_" + @Model.Reconciliations[i].Head.ToString() + "" })
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.Reconciliations[i].Jul, new { @type = "number", @min = 0, @onkeyup = "CalculateResult(this,'Jul')", @onchange = "CalculateResult(this,'Jan')", @class = "form-control Reconciliation_Jul Reconciliation_Jul_" + @Model.Reconciliations[i].Head.ToString() + "" })
 
-                                </td>
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.Reconciliations[i].Aug, new { @type = "number", @min = 0, @onkeyup = "CalculateResult(this,'Aug')", @onchange = "CalculateResult(this,'Jan')", @class = "form-control Reconciliation_Aug Reconciliation_Aug_" + @Model.Reconciliations[i].Head.ToString() + "" })
 
-                            </tr>
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.Reconciliations[i].Sep, new { @type = "number", @min = 0, @onkeyup = "CalculateResult(this,'Sep')", @onchange = "CalculateResult(this,'Jan')", @class = "form-control Reconciliation_Sep Reconciliation_Sep_" + @Model.Reconciliations[i].Head.ToString() + "" })
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.Reconciliations[i].Oct, new { @type = "number", @min = 0, @onkeyup = "CalculateResult(this,'Oct')", @onchange = "CalculateResult(this,'Jan')", @class = "form-control Reconciliation_Oct Reconciliation_Oct_" + @Model.Reconciliations[i].Head.ToString() + "" })
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.Reconciliations[i].Nov, new { @type = "number", @min = 0, @onkeyup = "CalculateResult(this,'Nov')", @onchange = "CalculateResult(this,'Jan')", @class = "form-control Reconciliation_Nov Reconciliation_Nov_" + @Model.Reconciliations[i].Head.ToString() + "" })
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.Reconciliations[i].Dec, new { @type = "number", @min = 0, @onkeyup = "CalculateResult(this,'Dec')", @onchange = "CalculateResult(this,'Jan')", @class = "form-control Reconciliation_Dec Reconciliation_Dec_" + @Model.Reconciliations[i].Head.ToString() + "" })
+
+                        </td>
+
+                    </tr>
 
                         }
 
